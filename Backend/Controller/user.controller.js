@@ -6,14 +6,13 @@ import jwt from "jsonwebtoken";
 export const register= async (req,res)=>{
 try{
     const {fullName,email,phoneNumber,password,role}= req.body;
+  
 
 if(!fullName||!email||!phoneNumber||!password||!role){
     return res.status(400).json({message:"Something is missing",success:false});
 }
 
 const user= await User.findOne({email});
-
-
 
 if(user){
 
@@ -22,6 +21,10 @@ if(user){
 const hassedPassword= await bcrypt.hash(password,10)
 
 await User.create({fullName,email,phoneNumber,password:hassedPassword,role});
+return res.status(201).json({message:"Account Created Successfully",success:true});
+
+
+
 }
 catch(err){
 
@@ -31,14 +34,13 @@ catch(err){
 
 export const login= async(req,res)=>{
 try{
+
 const {email,password,role}= req.body;
 if(!email||!password||!role){
     return res.status(400).json({message:"Something is missing",success:false});
 }
 
-
-
-const user= await User.findOne({email});
+let user= await User.findOne({email});
 
 if(!user)
 {
@@ -60,21 +62,26 @@ if(role!=user.role)
         userId:user._id
     }
  
-    const token= await jwt.sign(tokenData,process.env.SECRET_KEY,{expiresIn:'1d'})
-return res.status(200).cookie("token",token,{maxAge:1*24*60*60*1000,httpsOnly:true,sameSite:'strict'}).json({message:"Welcome Back",success:true});
+    const token= await jwt.sign(tokenData,process.env.SECRET_KEY,{expiresIn:'1d'});
+
+user={
+    _id:user._id,
+    fullName:user.fullName,
+    email:user.email,
+    phoneNumber:user.phoneNumber,
+    role:user.role,
+    profile:user.profile
+}
+return res.status(200).cookie("token",token,{maxAge:1*24*60*60*1000,httpsOnly:true,sameSite:'strict'}).json({message:"Welcome Back",success:true,user});
 }
 catch(err)
 {
    console.log(err);  
 }
 }
-
-
 export const logout= async(req,res)=>{
 try{
-
 return res.status(200).cookie("token","",{maxAge:0}).json({message:"Logged out Succesfully",success:true});
-
 }
 catch(err)
 {

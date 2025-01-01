@@ -48,9 +48,6 @@ console.log(err);
 
 }
 
-
-
-
 export const getCompanyById= async (req,res)=>{
     try {
     const CompanyID= req.params.id;
