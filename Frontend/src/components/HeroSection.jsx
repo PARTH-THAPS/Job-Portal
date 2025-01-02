@@ -14,12 +14,11 @@ export const HeroSection = () => {
             Search Apply & <br /> Get Your{" "}
             <span className="text-[#6A38C2]">Dream Jobs</span>
           </h1>
-          <p>
-            Welcome to JOB SEEKER, the platform dedicated to helping you
-            discover your dream job. Whether you're just starting your career,
-            looking to make a change, or aiming to take your professional
-            journey to the next level, we're here to guide you every step of the
-            way.
+          <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto my-6">
+            Welcome to the platform dedicated to helping you discover your dream
+            job. Whether you're just starting your career, looking to make a
+            change, or aiming to take your professional journey to the next
+            level, we're here to guide you every step of the way.
           </p>
           <div className="flex w-[40%] shadow-lg border border-gray-200 rounded-full items-center gap-4 mx-auto">
             <input
