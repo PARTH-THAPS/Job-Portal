@@ -17,6 +17,6 @@ const authSlice = createSlice({
 });
 
 // Export actions to be dispatched
-export const { setLoading } = authSlice.actions;
+export const { setLoading ,setUser} = authSlice.actions;
 
 export default authSlice.reducer;
