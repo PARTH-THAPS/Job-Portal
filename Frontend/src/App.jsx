@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Jobs from "./components/Jobs";
 import { Browse } from "./components/ui/Browse";
 import { Profile } from "./components/Profile";
+import { JobDescription } from "./components/JobDescription";
 
 const appRouter = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -14,6 +15,7 @@ const appRouter = createBrowserRouter([
   { path: "/jobs", element: <Jobs /> },
   { path: "/browse", element: <Browse /> },
   { path: "/profile", element: <Profile /> },
+  { path: "jobs/description/:id", element: <JobDescription /> },
 ]);
 
 function App() {
