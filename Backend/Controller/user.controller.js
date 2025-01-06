@@ -85,7 +85,7 @@ return res.status(200).cookie("token","",{maxAge:0}).json({message:"Logged out S
 }
 catch(err)
 {
-console.log(error);
+console.log(err);
 }
 }
 
@@ -93,16 +93,14 @@ console.log(error);
 export const updateProfile= async(req,res)=>{
 try{
     const {fullName,email,phoneNumber,bio,skills}=req.body;
+    console.log(fullName,email,phoneNumber,bio,skills);
 
     const file= req.file;
 
-    // if(!fullName||!email||!phoneNumber||!bio||!skills){
-    //     return res.status(400).json({message:"Something is missing",success:false});
-    // }
 
 let skillsArray;
 if(skills){
-     skillsArray=skills.split(",");
+     skillsArray=skills;
 }
     const userId=req.id;
     let user=await User.findById(userId);
@@ -135,7 +133,7 @@ if(skills){
 }
 catch(err)
 {
-
+console.log(err);
 }
 
 }
