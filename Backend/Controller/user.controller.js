@@ -129,6 +129,7 @@ if(skills){
 //resume ....
 
         await user.save();
+        res.status(201).json({message:"Account Updated Successfully",success:true});
 
 }
 catch(err)

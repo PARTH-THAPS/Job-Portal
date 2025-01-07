@@ -8,11 +8,13 @@ import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import { AppliedJobTable } from "./AppliedJobTable";
 import { UpdateProfileDialog } from "./UpdateProfileDialog";
+import { useSelector } from "react-redux";
 
 const skills = ["Html", "Css"];
 const isResume = true;
 export const Profile = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useSelector((store) => store.auth);
 
   return (
     <div>
@@ -28,7 +30,7 @@ export const Profile = () => {
             </Avatar>
 
             <div>
-              <h1 className="font-medium text-xl">Full Name</h1>
+              <h1 className="font-medium text-xl">{user?.fullName}</h1>
               <p>Add Your Bio Here</p>
             </div>
           </div>
@@ -45,20 +47,20 @@ export const Profile = () => {
         <div className="my-5">
           <div className="flex items-center gap-3 my-2">
             <Mail />
-            <span>parth@gmail.com</span>
+            <span>{user?.email}</span>
           </div>
           <div className="flex items-center gap-3 my-2">
             <Contact />
-            <span>9511157323</span>
+            <span>{user?.phoneNumber}</span>
           </div>
         </div>
 
         <div className="my-4">
           <h1>Skills</h1>
           <div className="flex items-center gap-1">
-            {skills.length != 0 ? (
-              skills.map((Item, index) => {
-                return <Badge key={index}>{Item}</Badge>;
+            {user?.profile.skills && user.profile.skills.length > 0 ? (
+              user.profile.skills.split(",").map((item, index) => {
+                return <Badge key={index}>{item.trim()}</Badge>;
               })
             ) : (
               <span>NA</span>
