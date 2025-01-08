@@ -64,7 +64,7 @@ export const UpdateProfileDialog = ({ open, setOpen }) => {
           withCredentials: true,
         }
       );
-
+      //console.log
       if (res.data.success) {
         dispatch(setUser(res.data.user));
         toast.success(res.data.message);
