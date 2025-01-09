@@ -31,7 +31,7 @@ export const Profile = () => {
 
             <div>
               <h1 className="font-medium text-xl">{user?.fullName}</h1>
-              <p>Add Your Bio Here</p>
+              <p>{user.profile?.bio}</p>
             </div>
           </div>
           <Button
