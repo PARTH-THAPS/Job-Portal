@@ -33,7 +33,7 @@ export const UpdateProfileDialog = ({ open, setOpen }) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
   };
-
+  console.log();
   const FileChangeHandler = (e) => {
     const file = e.target.files?.[0];
     setInput({ ...input, file });
