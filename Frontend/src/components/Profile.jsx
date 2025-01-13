@@ -15,6 +15,7 @@ const isResume = true;
 export const Profile = () => {
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
+  console.log(user);
 
   return (
     <div>
@@ -31,7 +32,7 @@ export const Profile = () => {
 
             <div>
               <h1 className="font-medium text-xl">{user?.fullName}</h1>
-              <p>{user.profile?.bio}</p>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
           <Button
@@ -58,8 +59,8 @@ export const Profile = () => {
         <div className="my-4">
           <h1>Skills</h1>
           <div className="flex items-center gap-1">
-            {user?.profile.skills && user.profile.skills.length > 0 ? (
-              user.profile.skills.split(",").map((item, index) => {
+            {user?.profile?.skills && user?.profile?.skills.length > 0 ? (
+              user?.profile?.skills.split(",").map((item, index) => {
                 return <Badge key={index}>{item.trim()}</Badge>;
               })
             ) : (

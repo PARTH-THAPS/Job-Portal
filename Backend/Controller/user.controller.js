@@ -1,6 +1,8 @@
 import {User} from "../Models/user.model.js"
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import getDataUri from "../Config/dataUri.js";
+import cloudinary from "../Config/cloudinary.js";
 
 
 export const register= async (req,res)=>{
@@ -96,6 +98,9 @@ try{
     console.log(fullName,email,phoneNumber,bio,skills);
 
     const file= req.file;
+    //cloudinary
+    const fileUri=getDataUri(file);
+    const cloudResponse= await cloudinary.uploader.upload(fileUri.content);
 
 
 let skillsArray;
@@ -127,6 +132,12 @@ if(skills){
         user.profile.skills=skillsArray;
 }
 //resume ....
+
+ if(cloudResponse)
+    {
+        user.profile.resume=cloudResponse.secure_url;
+        user.profile.resumeOriginalName=file.orginalname;
+    }
 
         await user.save();
         res.status(201).json({message:"Account Updated Successfully",success:true});
