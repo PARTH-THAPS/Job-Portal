@@ -29,7 +29,6 @@ return res.status(201).json({message:"Account Created Successfully",success:true
 
 }
 catch(err){
-
     console.log(err);
 }
 }
@@ -100,7 +99,9 @@ try{
     const file= req.file;
     //cloudinary
     const fileUri=getDataUri(file);
-    const cloudResponse= await cloudinary.uploader.upload(fileUri.content);
+    const cloudResponse= await cloudinary.uploader.upload(fileUri.content,{
+        resource_type: "raw" 
+    });
 
 
 let skillsArray;
@@ -136,11 +137,11 @@ if(skills){
  if(cloudResponse)
     {
         user.profile.resume=cloudResponse.secure_url;
-        user.profile.resumeOriginalName=file.orginalname;
+        user.profile.resumeOriginalName= file.originalname;
     }
 
         await user.save();
-        res.status(201).json({message:"Account Updated Successfully",success:true});
+        res.status(201).json({message:"Account Updated Successfully",user,success:true});
 
 }
 catch(err)
