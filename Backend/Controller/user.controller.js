@@ -14,6 +14,13 @@ if(!fullName||!email||!phoneNumber||!password||!role){
     return res.status(400).json({message:"Something is missing",success:false});
 }
 
+const file =req.file;
+const fileUri=getDataUri(file);
+const cloudResponse= await cloudinary.uploader.upload(fileUri.content,{
+    resource_type: "raw" 
+});
+console.log(cloudResponse);
+
 const user= await User.findOne({email});
 
 if(user){
@@ -22,7 +29,7 @@ if(user){
 }
 const hassedPassword= await bcrypt.hash(password,10)
 
-await User.create({fullName,email,phoneNumber,password:hassedPassword,role});
+await User.create({fullName,email,phoneNumber,password:hassedPassword,role,profile:{profilePhoto:cloudResponse.secure_url}});
 return res.status(201).json({message:"Account Created Successfully",success:true});
 
 
