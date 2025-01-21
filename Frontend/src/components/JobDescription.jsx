@@ -106,14 +106,13 @@ export const JobDescription = () => {
         <h1 className="font-bold my-1">
           Total Applicants:
           <span className="pl-4 font-normal text-gray-800">
-            {singleJob.applications?.length}
+            {singleJob?.applications?.length}
           </span>
         </h1>
 
         <h1 className="font-bold my-1">
           Posted Data:
           <span className="pl-4 font-normal text-gray-800">
-            {" "}
             {singleJob?.createdAt?.split("T")}
           </span>
         </h1>
