@@ -8,15 +8,18 @@ import { JOB_API_END_POINT } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { setSingleJob } from "../redux/jobSlice";
 import { User } from "lucide-react";
+import { application } from "express";
 
 export const JobDescription = () => {
-  const isApplied = false;
   const params = useParams();
   const { singleJob } = useSelector((store) => store.job);
   const { user } = useSelector((store) => store.job);
   const jobId = params.id;
   const dispatch = useDispatch();
-  ///
+  const isApplied =
+    singleJob?.applications?.some(
+      (application) => application.applicant === user?._id
+    ) || false;
 
   useEffect(() => {
     const fetchSingleJob = async () => {
