@@ -4,11 +4,14 @@ import { Button } from "./ui/button";
 import { useParams } from "react-router-dom";
 import useGetSingleJob from "../hooks/useGetSingleJob";
 import axios from "axios";
-import { JOB_API_END_POINT } from "../utils/constant";
+import {
+  APPLICATION_API_END_POINT,
+  JOB_API_END_POINT,
+} from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { setSingleJob } from "../redux/jobSlice";
 import { User } from "lucide-react";
-import { application } from "express";
+import { toast } from "sonner";
 
 export const JobDescription = () => {
   const params = useParams();
@@ -20,6 +23,19 @@ export const JobDescription = () => {
     singleJob?.applications?.some(
       (application) => application.applicant === user?._id
     ) || false;
+
+  const applyJobHandler = async () => {
+    try {
+      const res = await axios.get(
+        `${APPLICATION_API_END_POINT}/apply/${jobId}`
+      );
+      if (res.data.success) {
+        toast.success(res.data.message);
+
+        dispatch(setSingleJob);
+      }
+    } catch (err) {}
+  };
 
   useEffect(() => {
     const fetchSingleJob = async () => {
