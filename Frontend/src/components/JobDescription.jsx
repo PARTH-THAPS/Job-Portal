@@ -29,7 +29,7 @@ export const JobDescription = () => {
           dispatch(setSingleJob(res.data.job));
         }
       } catch (err) {
-        console.log(err);
+        console.log(err + " ");
       }
     };
     fetchSingleJob();
