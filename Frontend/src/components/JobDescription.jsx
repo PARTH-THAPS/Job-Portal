@@ -31,7 +31,7 @@ export const JobDescription = () => {
       );
       if (res.data.success) {
         toast.success(res.data.message);
-
+        console.log("fae");
         dispatch(setSingleJob);
       }
     } catch (err) {}
