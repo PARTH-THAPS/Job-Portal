@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { useParams } from "react-router-dom";
@@ -19,20 +19,28 @@ export const JobDescription = () => {
   const { user } = useSelector((store) => store.job);
   const jobId = params.id;
   const dispatch = useDispatch();
-  const isApplied =
+  const isIntiallyApplied =
     singleJob?.applications?.some(
       (application) => application.applicant === user?._id
     ) || false;
 
+  const [isApplied, setIsApplied] = useState(isIntiallyApplied);
+
   const applyJobHandler = async () => {
     try {
       const res = await axios.get(
-        `${APPLICATION_API_END_POINT}/apply/${jobId}`
+        `${APPLICATION_API_END_POINT}/apply/${jobId}`,
+        { withCredentials: true }
       );
+      console.log(res);
       if (res.data.success) {
+        setIsApplied(true);
+        const updateSingleJob = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicant: user?._id }],
+        };
         toast.success(res.data.message);
-        console.log("fae");
-        dispatch(setSingleJob);
+        dispatch(setSingleJob(updateSingleJob));
       }
     } catch (err) {}
   };
@@ -46,6 +54,11 @@ export const JobDescription = () => {
 
         if (res.data.success) {
           dispatch(setSingleJob(res.data.job));
+          setIsApplied(
+            res.data.job.applications.some(
+              (application) => application.applicant == user?._id
+            )
+          );
         }
       } catch (err) {
         console.log(err + " ");
@@ -73,6 +86,7 @@ export const JobDescription = () => {
           </div>
         </div>
         <Button
+          onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
           className={`rounded-lg ${
             isApplied
