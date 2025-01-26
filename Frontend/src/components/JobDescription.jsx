@@ -16,16 +16,19 @@ import { toast } from "sonner";
 export const JobDescription = () => {
   const params = useParams();
   const { singleJob } = useSelector((store) => store.job);
-  const { user } = useSelector((store) => store.job);
+  const { user } = useSelector((store) => store.auth);
   const jobId = params.id;
   const dispatch = useDispatch();
+
   const isIntiallyApplied =
     singleJob?.applications?.some(
       (application) => application.applicant === user?._id
     ) || false;
 
   const [isApplied, setIsApplied] = useState(isIntiallyApplied);
-
+  console.log(
+    singleJob + "singleJob  " + isIntiallyApplied + "  " + isApplied + "  "
+  );
   const applyJobHandler = async () => {
     try {
       const res = await axios.get(
