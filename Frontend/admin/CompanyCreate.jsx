@@ -25,7 +25,7 @@ export const CompanyCreate = () => {
           <h1 className="font-bold text-2xl">Your Comapny Name </h1>
           <p>
             What would you like give your company name ? You can chnage this
-            later.
+            later
           </p>
         </div>
 
