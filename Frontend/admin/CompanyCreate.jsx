@@ -13,7 +13,7 @@ export const CompanyCreate = () => {
     try {
       const res = await axios.post(`${COMPANY_API_END_POINT}/register`);
     } catch (err) {
-      console.log(err);
+      console.log(err + " h");
     }
   };
 
