@@ -5,13 +5,35 @@ import { Input } from "../src/components/ui/input";
 import { Button } from "../src/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { COMPANY_API_END_POINT } from "../src/utils/constant";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setSingleCompany } from "../src/redux/companySlice";
+import axios from "axios";
 
 export const CompanyCreate = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [companyName, setCompanyName] = useState();
   const registerNewCompany = async () => {
     try {
-      const res = await axios.post(`${COMPANY_API_END_POINT}/register`);
+      const res = await axios.post(
+        `${COMPANY_API_END_POINT}/register`,
+        {
+          companyName,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      if (res?.data?.success) {
+        dispatch(setSingleCompany(res.data.company));
+        toast.success(res.data.message);
+        console.log("res new" + JSON.stringify(res));
+        const companyId = res?.data?.ReturnData?._id;
+        navigate(`/admin/companies/${companyId}`);
+      }
     } catch (err) {
       console.log(err + " h");
     }
@@ -34,6 +56,9 @@ export const CompanyCreate = () => {
           type="text"
           className="my-2"
           placeholder="JobHunt , Microsoft"
+          onChange={(e) => {
+            setCompanyName(e.target.value);
+          }}
         ></Input>
         <div className="flex items-center gap-2 my-10">
           <Button

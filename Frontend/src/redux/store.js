@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
 import jobSlice from "./jobSlice";
+import companySlice from "./companySlice";
 import {
   persistStore,
   persistReducer,
@@ -19,7 +20,11 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = combineReducers({ auth: authReducer, job: jobSlice });
+const rootReducer = combineReducers({
+  auth: authReducer,
+  job: jobSlice,
+  company: companySlice,
+});
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
