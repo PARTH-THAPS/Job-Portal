@@ -4,6 +4,7 @@ import { Button } from "../src/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "../src/components/ui/input";
+import axios from "axios";
 
 export const CompanySetup = () => {
   const [input, setInput] = useState({
@@ -27,6 +28,19 @@ export const CompanySetup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("name".input.name);
+    formData.append("description".input.description);
+    formData.append("website".input.website);
+    formData.append("location".input.location);
+    if (input.file) {
+      formData.append("file".input.file);
+    }
+    try {
+      // const res = await axios.put();
+    } catch (err) {
+      console.log(err);
+    }
     console.log();
   };
 
