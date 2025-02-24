@@ -92,7 +92,7 @@ export const CompanySetup = () => {
             </div>
 
             <div>
-              <Label>Location</Label>
+              <Label>Location(File)</Label>
               <Input
                 type="text"
                 name="location"
