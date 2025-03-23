@@ -37,8 +37,8 @@ export const getCompany = async (req, res) => {
     const userID = req.id;
 
     const companies = await Company.find(
-      { userId: userID },
-      { name: 1, createdAt: 1, logo: 1, _id: 0 }
+      { userId: userID }
+      // { name: 1, createdAt: 1, logo: 1, _id: 0 }
     );
 
     if (!companies) {

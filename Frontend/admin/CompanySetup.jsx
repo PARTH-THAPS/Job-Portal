@@ -9,6 +9,7 @@ import { COMPANY_API_END_POINT } from "../src/utils/constant";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import useGetCompanyById from "../src/hooks/useGetCompanyById";
 
 export const CompanySetup = () => {
   const [input, setInput] = useState({
@@ -23,6 +24,7 @@ export const CompanySetup = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
+  useGetCompanyById(params.id);
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
