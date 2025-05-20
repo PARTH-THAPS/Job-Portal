@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import useGetCompanyById from "../src/hooks/useGetCompanyById";
 
 export const CompanySetup = () => {
+  const params = useParams();
+
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -23,7 +25,7 @@ export const CompanySetup = () => {
   const { singleCompany } = useSelector((store) => store.company);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const params = useParams();
+
   useGetCompanyById(params.id);
 
   const changeEventHandler = (e) => {

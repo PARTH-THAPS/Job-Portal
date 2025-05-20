@@ -16,9 +16,10 @@ export default function useGetCompanyById(companyId) {
             withCredentials: true,
           }
         );
+        console.log(res.data.companies);
 
         if (res.data.success) {
-          dispatch(setSingleCompany(res.data.company));
+          dispatch(setSingleCompany(res.data.companies));
         }
       } catch (err) {
         console.log(err);
