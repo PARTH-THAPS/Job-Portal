@@ -10,12 +10,12 @@ export const postJob = async (req, res) => {
       salary,
       location,
       jobType,
-      experince,
+      experience, // corrected
       position,
       companyId,
     } = req.body;
-    const userId = req.id;
-    console.log(req.body);
+
+    const userId = req.id; // Ensure this comes from auth middleware
 
     if (
       !title ||
@@ -24,32 +24,36 @@ export const postJob = async (req, res) => {
       !salary ||
       !location ||
       !jobType ||
-      !experince ||
+      !experience ||
       !position ||
       !companyId
     ) {
       return res
         .status(400)
-        .json({ message: "Something is missing", sucess: false });
+        .json({ message: "Something is missing", success: false }); // fixed spelling
     }
 
     const job = await Job.create({
       title,
       description,
-      requirements: requirements.split(","),
-      experinceLevel: experince,
+      requirements: requirements.split(",").map((req) => req.trim()), // cleaner list
+      experienceLevel: experience,
       salary: Number(salary),
       location,
       jobType,
       position,
-      companyId: companyId,
+      companyId,
       createdBy: userId,
     });
+
     return res
       .status(201)
-      .json({ message: "New job created Sucessfully", job, success: true });
+      .json({ message: "New job created successfully", job, success: true }); // fixed spelling
   } catch (err) {
-    console.log(err);
+    console.error("Error creating job:", err);
+    return res
+      .status(500)
+      .json({ message: "Internal server error", success: false });
   }
 };
 
@@ -102,15 +106,26 @@ export const getJobById = async (req, res) => {
 export const getAdminJobs = async (req, res) => {
   try {
     const adminId = req.id;
-    const jobs = await Job.find({ createdBy: adminId });
+    const jobs = await Job.find({ createdBy: adminId }).populate({
+      path: "companyId",
+      createdAt: -1,
+    });
 
-    if (!jobs) {
-      return res.status(404).json({ message: "not found", success: false });
+    if (!jobs || jobs.length === 0) {
+      return res.status(404).json({ message: "No jobs found", success: false });
     }
-    return res
-      .status(200)
-      .json({ message: "Company Found", jobs, success: true });
+
+    return res.status(200).json({
+      message: "Jobs retrieved successfully",
+      jobs,
+      success: true,
+    });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+      success: false,
+    });
   }
 };
