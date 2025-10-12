@@ -31,7 +31,7 @@ export const Job = ({ job }) => {
       <div className="flex items-center gap-2 my-2">
         <Button className="p-6" variant="outline" size="icon">
           <Avatar>
-            <AvatarImage src="https://coralogix.com/wp-content/uploads/2023/03/MongoDB-1000X1000.png" />
+            <AvatarImage src={job?.companyId?.logo} />
           </Avatar>
         </Button>
         <div>

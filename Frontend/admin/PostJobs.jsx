@@ -61,7 +61,6 @@ export const PostJobs = () => {
       }
     } catch (err) {
       toast.error(err.response?.data?.message);
-      console.log("DAMAG");
     } finally {
       setLoading(false);
     }
