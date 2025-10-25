@@ -87,25 +87,58 @@ export const getApplicants = async (req, res) => {
   }
 };
 
+// export const updateStatus = async (req, res) => {
+//   const status = req.body;
+//   const appliationId = req.params.id;
+//   if (!status) {
+//     return res
+//       .status(400)
+//       .json({ message: "status is required", success: false });
+//   }
+//   const application = await Application.findOne({ _id: appliationId });
+
+//   if (!application) {
+//     return res
+//       .status(404)
+//       .json({ message: "Application Not Found", success: false });
+//   }
+//   application.status = status.toLowerCase();
+//   await application.save();
+
+//   return res
+//     .status(200)
+//     .json({ message: "Status Updated Successfully", success: true });
+// };
+
 export const updateStatus = async (req, res) => {
-  const status = req.body;
-  const appliationId = req.params.id;
-  if (!status) {
-    return res
-      .status(400)
-      .json({ message: "status is required", success: false });
-  }
-  const application = await Application.findOne({ _id: appliationId });
+  try {
+    const { status } = req.body;
+    const applicationId = req.params.id;
 
-  if (!application) {
-    return res
-      .status(404)
-      .json({ message: "Application Not Found", success: false });
-  }
-  application.status = status.toLowerCase();
-  await application.save();
+    if (!status) {
+      return res
+        .status(400)
+        .json({ message: "Status is required", success: false });
+    }
 
-  return res
-    .status(200)
-    .json({ message: "Status Updated Successfully", success: true });
+    const application = await Application.findById(applicationId);
+
+    if (!application) {
+      return res
+        .status(404)
+        .json({ message: "Application not found", success: false });
+    }
+
+    application.status = status.toLowerCase();
+    await application.save();
+
+    return res
+      .status(200)
+      .json({ message: "Status updated successfully", success: true });
+  } catch (error) {
+    console.error("Error updating status:", error);
+    return res
+      .status(500)
+      .json({ message: "Internal server error", success: false });
+  }
 };
