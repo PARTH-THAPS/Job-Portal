@@ -52,3 +52,7 @@ npm install
 npm start
 
 
+<img width="1882" height="930" alt="image" src="https://github.com/user-attachments/assets/7fbbbcf2-0443-482e-8ebf-2e8ff3fefb0d" />
+
+
+
